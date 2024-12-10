@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Massa Atmosfer Planet di Tata Surya</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #e6f7ff;
+            color: #333;
+        }
+        header {
+            background-color: #0074e4; /* Electric Blue */
+            color: white;
+            padding: 20px 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #0074e4;
+        }
+        select, button {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #0074e4; /* Electric Blue */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5; /* Darker blue for hover */
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            background-color: #f4f4f9;
+            border: 1px solid #0074e4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Massa Atmosfer Planet di Tata Surya</h1>
+    </header>
+    <div class="container">
+        <p>Pilih planet untuk menghitung massa atmosfer:</p>
+        <select id="planet">
+            <option value="merkurius">Merkurius (tidak memiliki atmosfer)</option>
+            <option value="venus">Venus</option>
+            <option value="bumi">Bumi</option>
+            <option value="mars">Mars</option>
+            <option value="jupiter">Jupiter</option>
+            <option value="saturnus">Saturnus</option>
+            <option value="uranus">Uranus</option>
+            <option value="neptunus">Neptunus</option>
+        </select>
+        <button onclick="hitungMassaAtmosfer()">Hitung Massa Atmosfer</button>
+        <div id="hasil" class="result"></div>
+    </div>
+
+    <script>
+        function hitungMassaAtmosfer() {
+            const planet = document.getElementById('planet').value;
+            const hasilElement = document.getElementById('hasil');
+
+            // Data planet: [tekanan (Pa), radius (km), gravitasi (m/s²)]
+            const dataPlanet = {
+                merkurius: [0, 2439.7, 3.7],
+                venus: [9200000, 6051.8, 8.87],
+                bumi: [101325, 6371, 9.8],
+                mars: [600, 3389.5, 3.71],
+                jupiter: [200000, 69911, 24.79],
+                saturnus: [140000, 58232, 10.44],
+                uranus: [120000, 25362, 8.69],
+                neptunus: [110000, 24622, 11.15]
+            };
+
+            // Ambil data planet
+            const [tekanan, radius, gravitasi] = dataPlanet[planet];
+
+            // Jika tidak ada atmosfer
+            if (tekanan === 0) {
+                hasilElement.textContent = `${planet.charAt(0).toUpperCase() + planet.slice(1)} tidak memiliki atmosfer yang signifikan.`;
+                return;
+            }
+
+            // Konversi radius ke meter
+            const radiusMeter = radius * 1000;
+
+            // Rumus massa atmosfer: M = (4 * π * r² * tekanan) / gravitasi
+            const massaAtmosfer = (4 * Math.PI * Math.pow(radiusMeter, 2) * tekanan) / gravitasi;
+
+            // Format hasil ke notasi ilmiah
+            hasilElement.textContent = `Massa atmosfer ${planet.charAt(0).toUpperCase() + planet.slice(1)}: ${massaAtmosfer.toExponential(3)} kg`;
+        }
+    </script>
+</body>
+</html>
